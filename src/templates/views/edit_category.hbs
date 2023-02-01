@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit_category</title>
+</head>
+
+<body>
+    <!-- Vertical Form -->
+    <form class="row g-3" action="/add_category" method="post" enctype="multipart/form-data">
+        {{#each update_data }}
+        <div class="col-12">
+            <label for="inputNanme4" class="form-label">parent Name</label>
+            <select name="parent_Name" id="">
+                <option value="">{{this.parent_Name}}</option>
+                <option value="">null</option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            {{!-- <label for="inputNanme4" class="form-label">parent Name</label> --}}
+            <input type="hidden"  name="id" value={{this._id}}>
+        </div>
+        <div class="col-12">
+            <label for="" class="form-label">Name</label>
+            <input type="text"  name="Name" value={{this.Name}} >
+        </div>
+        <div class="col-12">
+            <label for="inputPassword4" class="form-label">Iamge</label>
+            <input type="file" name="file" value={{this.image}} class="form-control" id="inputPassword4">
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+        {{/each}}
+    </form><!-- Vertical Form -->
+</body>
+
+</html>
