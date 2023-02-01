@@ -34,39 +34,63 @@ exports.LoginUser = async (req, res) => {
 }
 
 exports.Register = (req, res) => {
-    const token = req.cookies.NiceAdmin
-    if (token) {
-        res.render("index")
-    } else {
-        res.render("pages-register")
+    try {
+        const token = req.cookies.NiceAdmin
+        if (token) {
+            res.render("index")
+        } else {
+            res.render("pages-register")
+        }
+    } catch (error) {
+        console.log("UserData", error)
     }
 }
 
 exports.UserRegistetion = async (req, res) => {
-    const savedata = await userregister(req, res)
+    try {
+        const savedata = await userregister(req, res)
+    } catch (error) {
+        console.log("UserData", error)
+    }
 }
 
 exports.SignOut = async (req, res) => {
-    res.clearCookie("NiceAdmin", 'token', { expires: new Date(0) })
-        .redirect("/");
+    try {
+        res.clearCookie("NiceAdmin", 'token', { expires: new Date(0) })
+            .redirect("/");
+    } catch (error) {
+        console.log("UserData", error)
+    }
 }
 exports.Category = async (req, res) => {
-    res.render("create_category")
+    try {
+        res.render("create_category")
+    } catch (error) {
+        console.log("UserData", error)
+    }
 }
 
 let _id;
 exports.AddCategory = async (req, res, next) => {
-    if (!_id) {
-        await AddCategory(req, res)
-    } else {
-        await AddCategory(req, res, _id)
+    try {
+        if (!_id) {
+            await AddCategory(req, res)
+        } else {
+            await AddCategory(req, res, _id)
+        }
+    } catch (error) {
+        console.log("UserData", error)
     }
 }
 exports.ViwesCategory = async (req, res) => {
-    res.render("viwes_category")
+    try {
+        res.render("viwes_category")
+    } catch (error) {
+        console.log("UserData", error)
+    }
 }
 exports.ViwesCategoryes = async (req, res) => {
-    {
+    try {
         let start = req.query.start;
         let limit = req.query.length;
         let condition = { parent_Name: null };
@@ -81,12 +105,12 @@ exports.ViwesCategoryes = async (req, res) => {
                 // }
                 // row1.forEach(async (index) => {
                 for await (const index of row1) {
-                    const ddd = await CategoryModule.find({ parent_Name: index._id })
-                    // console.log("index", i, ddd.length)
+                    const FindData = await CategoryModule.find({ parent_Name: index._id })
+                    // console.log("index", i, FindData.length)
                     i++
                     let dele;
-                    if (ddd.length > 0) {
-                        dele = `<a href="#">Not Delete</a>`
+                    if (FindData.length > 0) {
+                        dele = `<a href="viwes/${index._id}"> Viwe</a>`
                     } else {
                         dele = `<a href="delete/${index._id}">delete</a>`
                     }
@@ -109,135 +133,177 @@ exports.ViwesCategoryes = async (req, res) => {
                 }
             });
         });
+    } catch (error) {
+        console.log("ViwesCategoryes", error)
     }
 }
 
 exports.edit_category = async (req, res) => {
-    _id = req.params.id
-    // console.log("req.params.id", _id);
-    if (_id) {
-        const update_data = await CategoryModule.find({ _id })
-        // console.log("update_data", update_data)
-        if (update_data) {
-            res.render("edit_category", { update_data });
+    try {
+        _id = req.params.id
+        // console.log("req.params.id", _id);
+        if (_id) {
+            const update_data = await CategoryModule.find({ _id })
+            // console.log("update_data", update_data)
+            if (update_data) {
+                res.render("edit_category", { update_data });
+            }
         }
+    } catch (error) {
+        console.log("UserData", error)
     }
 }
 exports.delete_category = async (req, res) => {
-    _id = req.params.id
-    // console.log("delete_category", _id);
-    const result = await CategoryModule.findByIdAndRemove({ _id });
-    if (result) {
-        // console.log("delete_category")
+    try {
+        _id = req.params.id
+        // console.log("delete_category", _id);
+        const result = await CategoryModule.findByIdAndRemove({ _id });
+        if (result) {
+            // console.log("delete_category")
+        }
+        res.redirect("/viwes-category.html")
+    } catch (error) {
+        console.log("UserData", error)
     }
-    res.redirect("/viwes-category.html")
 }
 exports.sub_category_delete = async (req, res) => {
-    _id = req.params.id
-    // console.log("delete_sub_category", _id);
-    const result = await CategoryModule.findByIdAndRemove({ _id });
-    if (result) {
-        // console.log("delete_sub_category")
+    try {
+        _id = req.params.id
+        // console.log("delete_sub_category", _id);
+        const result = await CategoryModule.findByIdAndRemove({ _id });
+        if (result) {
+            // console.log("delete_sub_category")
+        }
+        res.redirect("/viwes_sub_category.html")
+    } catch (error) {
+        console.log("UserData", error)
     }
-    res.redirect("/viwes_sub_category.html")
 }
 
 exports.sub_category = async (req, res) => {
-    const findcategory = await CategoryModule.find({ parent_Name: null })
-    res.render("create_sub_category", { findcategory })
+    try {
+        const findcategory = await CategoryModule.find({ parent_Name: null })
+        res.render("create_sub_category", { findcategory })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 exports.add_sub_category = async (req, res) => {
-    req.body.image = req.file.filename
-    // console.log("add_sub_category req.body", req.body)
-    await add_sub_categorys(req, res)
+    try {
+        req.body.image = req.file.filename
+        // console.log("add_sub_category req.body", req.body)
+        await add_sub_categorys(req, res)
+    } catch (error) {
+        console.log(error)
+    }
 }
 exports.viwes_sub_category = async (req, res) => {
-    res.render("viwes_sub_category")
+    try {
+        res.render("viwes_sub_category")
+    } catch (error) {
+        console.log(error)
+    }
 }
 exports.viwes_sub_categorys = async (req, res) => {
-    let start = Number(req.query.start);
-    let limit = Number(req.query.length);
-    let condition = [
-        {
-            $match: {
-                parent_Name: {
-                    $ne: null,
+    try {
+        let start = Number(req.query.start);
+        let limit = Number(req.query.length);
+        let condition = [
+            {
+                $match: {
+                    parent_Name: {
+                        $ne: null,
+                    },
                 },
             },
-        },
-        {
-            $lookup: {
-                from: "categories",
-                localField: "parent_Name",
-                foreignField: "_id",
-                as: "parent",
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "parent_Name",
+                    foreignField: "_id",
+                    as: "parent",
+                },
+            }, {
+                $unwind: {
+                    path: "$parent",
+                },
             },
-        }, {
-            $unwind: {
-                path: "$parent",
+            {
+                $skip: start
             },
-        },
-        {
-            $skip: start
-        },
-        {
-            $limit: limit
-        },
-    ]
+            {
+                $limit: limit
+            },
+        ]
 
-    CategoryModule.countDocuments({ parent_Name: { $ne: null } }).exec(async (err, row) => {
-        if (err) console.log(err);
-        let newData = row
-        let data = [];
-        let count = 1;
-        await CategoryModule.aggregate(condition).exec(async (err, row1) => {
-            for await (const index of row1) {
-                const ddd = await CategoryModule.find({ parent_Name: index._id })
-                // console.log("index", ddd.length)
+        CategoryModule.countDocuments({ parent_Name: { $ne: null } }).exec(async (err, row) => {
+            if (err) console.log(err);
+            let newData = row
+            let data = [];
+            let count = 1;
+            await CategoryModule.aggregate(condition).exec(async (err, row1) => {
+                for await (const index of row1) {
+                    const FindData = await CategoryModule.find({ parent_Name: index._id })
+                    // console.log("index", FindData.length)
 
-                let dele;
-                if (ddd.length > 0) {
-                    dele = `<a href="#">Not Delete</a>`
-                } else {
-                    dele = `<a href="delete/${index._id}">delete</a>`
+                    let dele;
+                    if (FindData.length > 0) {
+                        dele = `<a href="viwes/${index._id}"> Viwe</a>`
+                    } else {
+                        dele = `<a href="delete/${index._id}">delete</a>`
+                    }
+                    data.push({
+                        "count": count,
+                        "Name": index.Name,
+                        "image": `<img src="/uploads/${index.image}" alt="Girl in a jacket" width="50" height="60">`,
+                        "parent_Name": index.parent.Name,
+                        "edit": `<a href="edit/${index._id}">edit</a>`,
+                        "delete": dele,
+
+                    });
+                    count++;
+                };
+                if (count > row1.length) {
+                    let jsonValue = JSON.stringify({
+                        recordsTotal: row,
+                        recordsFiltered: newData,
+                        data: data
+                    });
+                    res.send(jsonValue);
                 }
-                data.push({
-                    "count": count,
-                    "Name": index.Name,
-                    "image": `<img src="/uploads/${index.image}" alt="Girl in a jacket" width="50" height="60">`,
-                    "parent_Name": index.parent.Name,
-                    "edit": `<a href="edit/${index._id}">edit</a>`,
-                    "delete": dele,
-
-                });
-                count++;
-            };
-            if (count > row1.length) {
-                let jsonValue = JSON.stringify({
-                    recordsTotal: row,
-                    recordsFiltered: newData,
-                    data: data
-                });
-                res.send(jsonValue);
-            }
+            });
         });
-    });
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
 exports.sub2_category = async (req, res) => {
-    const findcategory = await CategoryModule.find({ parent_Name: { $ne: null } })
-    res.render("create_sub2_category", { findcategory })
+    try {
+        const findcategory = await CategoryModule.find({ parent_Name: { $ne: null } })
+        res.render("create_sub2_category", { findcategory })
+    } catch (error) {
+        console.log(error)
+    }
 }
 exports.create_sub2_category = async (req, res) => {
-    await create_sub2_category(req, res)
+    try {
+        await create_sub2_category(req, res)
+    } catch (error) {
+        console.log(error)
+    }
 }
 exports.viwes_sub2_category = async (req, res) => {
-    res.render("viwes_sub2_category")
+    try {
+        res.render("viwes_sub2_category")
+    } catch (error) {
+        console.log(error)
+    }
 }
 exports.Viwes_Sub2_CategoryDataTable = async (req, res) => {
-    {
+    try {
         let start = Number(req.query.start);
         let limit = Number(req.query.length);
         let condition = [
@@ -274,12 +340,12 @@ exports.Viwes_Sub2_CategoryDataTable = async (req, res) => {
             let count = 1;
             await CategoryModule.aggregate(condition).exec(async (err, row1) => {
                 for await (const index of row1) {
-                    const ddd = await CategoryModule.find({ parent_Name: index._id })
-                    // console.log("index", ddd.length)
+                    const FindData = await CategoryModule.find({ parent_Name: index._id })
+                    // console.log("index", FindData.length)
 
                     let dele;
-                    if (ddd.length > 0) {
-                        dele = `<a href="#">Not Delete</a>`
+                    if (FindData.length > 0) {
+                        dele = `<a href="viwes/${index._id}"> Viwe</a>`
                     } else {
                         dele = `<a href="delete/${index._id}">delete</a>`
                     }
@@ -304,52 +370,67 @@ exports.Viwes_Sub2_CategoryDataTable = async (req, res) => {
                 }
             });
         });
+
+    } catch (error) {
+        console.log(error)
     }
 }
 
 
 
 exports.dropdown = async (req, res) => {
-    const findcategory = await CategoryModule.find({ parent_Name: null })
-    res.render("dropdown", { findcategory })
+    try {
+        const findcategory = await CategoryModule.find({ parent_Name: null })
+        res.render("dropdown", { findcategory })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 exports.optiongeturl = async (req, res) => {
-    const ff = req.query.select
-    // console.log("req.query", ff.length);
-    // console.log(`=======${req.url}`)
-    if (ff.length == 24) {
-        const _id = mongoose.Types.ObjectId(ff)
+    try {
+        const ff = req.query.select
+        // console.log("req.query", ff.length);
+        // console.log(`=======${req.url}`)
+        if (ff.length == 24) {
+            const _id = mongoose.Types.ObjectId(ff)
 
-        const sub_category = await CategoryModule.find({ parent_Name: _id })
-        const userdata = []
-        sub_category.forEach((index) => {
-            userdata.push({
-                "_id": index._id,
-                "Name": index.Name,
+            const sub_category = await CategoryModule.find({ parent_Name: _id })
+            const userdata = []
+            sub_category.forEach((index) => {
+                userdata.push({
+                    "_id": index._id,
+                    "Name": index.Name,
+                });
             });
-        });
 
-        res.send(userdata);
+            res.send(userdata);
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 exports.sub2_category2 = async (req, res) => {
-    const ff = req.query.select
-    // console.log("req.query 22222", ff.length);
-    // console.log(`=======${req.url}`)
-    if (ff.length == 24) {
-        const _id = mongoose.Types.ObjectId(ff)
+    try {
+        const ff = req.query.select
+        // console.log("req.query 22222", ff.length);
+        // console.log(`=======${req.url}`)
+        if (ff.length == 24) {
+            const _id = mongoose.Types.ObjectId(ff)
 
-        const sub_category = await CategoryModule.find({ parent_Name: _id })
-        const userdata = []
-        sub_category.forEach((index) => {
-            // index.Email
-            userdata.push({
-                "_id": index._id,
-                "Name": index.Name,
+            const sub_category = await CategoryModule.find({ parent_Name: _id })
+            const userdata = []
+            sub_category.forEach((index) => {
+                // index.Email
+                userdata.push({
+                    "_id": index._id,
+                    "Name": index.Name,
+                });
             });
-        });
 
-        res.send(userdata);
+            res.send(userdata);
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
