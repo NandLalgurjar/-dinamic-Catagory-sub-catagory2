@@ -279,7 +279,7 @@
 
   </header><!-- End Header -->
 
-{{> sidebar }}
+  {{> sidebar }}
 
   <main id="main" class="main">
 
@@ -312,8 +312,7 @@
                 <th>Name</th>
                 <th>image</th>
                 <th>parent name</th>
-                <th>edit</th>
-                <th>delete</th>
+                <th>Action</th>
 
 
               </tr>
@@ -321,9 +320,20 @@
             <tbody>
             </tbody>
           </table>
-
+          <input type="hidden" id="myText" value={{_id}}>
           <script type="text/javascript">
             $(document).ready(function () {
+              let id = document.getElementById("myText").value;
+              let fff;
+              console.log("iddd", id)
+              if (id) {
+                fff = `/${id}`
+                console.log("if ", id, fff)
+              }
+              else {
+                fff = `/`
+                console.log("else ", id, fff)
+              }
               $.fn.dataTable.ext.errMode = 'none';
               $('#mytable').DataTable({
                 "lengthMenu": [2, 4, 6, 8, 15],
@@ -331,7 +341,7 @@
                 serverSide: true,
                 "ajax": {
                   "type": 'GET',
-                  "url": '/viwes_sub_categorys',
+                  "url": `/viwes_sub_categorys${fff}`,
                   "dataSrc": 'data',
                   error: function () { console.log(error) }
                 },
@@ -339,9 +349,8 @@
                   { "data": "count" },
                   { "data": "Name" },
                   { "data": "image" },
-                   { "data": "parent_Name" },
-                  { "data": "edit" },
-                  { "data": "delete" },
+                  { "data": "parent_Name" },
+                  { "data": "Action" },
 
 
                 ]

@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="/assets/img/favicon.png" rel="icon">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -20,16 +20,16 @@
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.0
@@ -46,7 +46,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <img src="/assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -161,7 +161,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <img src="/assets/img/messages-1.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -175,7 +175,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <img src="/assets/img/messages-2.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -189,7 +189,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <img src="/assets/img/messages-3.jpg" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -212,7 +212,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -289,88 +289,162 @@
 
     <section class="section contact">
       <div class="row gy-4">
-        <div class="col-xl-6">
+        <div class="col-xl-12">
           <div class="row">
-            <form name="form1" id="form1" action="/action_page.php">
-              Category: <select name="subject" id="subject" onchange="run()">
-                <option value=selected="selected">Select Category</option>
-                {{#each findcategory}}
-                <option value={{this._id}} name={{this.Name}}>{{this.Name}}</option>
-                {{/each}}
-              </select>
-              <br><br>
-              Sub Category: <select name="topic" id="topic" onchange="run2()">
-                <option value="" selected="selected">Please select Sub Category first</option>
-              </select>
-              <br><br>
-              Child: <select name="chapter" id="chapter">
-                <option value="" selected="selected">Please select Child first</option>
-              </select>
-              <br><br>
-              <input type="submit" value="Submit">
-            </form>
+            <div class="card-body">
+              <h5 class="card-title">Multi Columns Form {{FindData.ProductName}}</h5>
+              {{#if FindData }}
+              {{#each FindData.image}}
+              <img src="/uploads/{{this}}" alt="helloo" style="width: 50px; height: 50px;">
+              {{/each}}
+              <form class="row g-3" action="/Add-Product" method="post" enctype="multipart/form-data">
+                <div class="col-md-12">
+                  <label for="inputCity" class="form-label"> HELLO Category</label>
+                  <select style="" class="form-select" name="_id" id="0">
+                    <option id="{{FindData._id}}" value="{{FindData._id}}">_id</option>
+                  </select>
+                </div> <br>
+                {{!-- <div id="myselect" class="col-md-12">
+
+                </div> --}}
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Product Name</label>
+                  <input type="text" name="ProductName" value="{{FindData.ProductName}}" class="form-control" id="">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputProductIamge5" class="form-label">Product Iamge</label>
+                  <input type="file" name="file" multiple="multiple" class="form-control" id="inputProductIamge5">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPrice5" class="form-label">Product Price </label>
+                  <input type="number" name="ProductPrice" value="{{FindData.ProductPrice}}" class="form-control"
+                    id="inputPrice5" placeholder="Enter Product Price">
+                </div>
+                <div class="col-12">
+                  <label for="inputdescription" class="form-label">description</label>
+                  <input type="text" name="description" value="{{FindData.description}}" class="form-control"
+                    id="inputdescription" placeholder="description">
+                </div>
+                {{!-- <div class="col-12">
+                  <label for="inputAddress2" class="form-label">Address 2</label>
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div> --}}
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                      Check me out
+                    </label>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form><!-- End Multi Columns Form -->
+              {{else}}
+
+
+              <!-- Multi Columns Form -->
+              <form class="row g-3" action="/Add-Product" method="post" enctype="multipart/form-data">
+                <div class="col-md-12">
+                  <label for="inputCity" class="form-label">Category</label>
+                  <select style="width: 50%;" class="form-select" name="category" id="0" onchange="clickMe(this)">
+                    <option>select Category</option>
+                    {{!-- <% if(typeof data !=='undefind' && data){%> --}}
+                      {{#each findcategory}}
+                      <option id={{this.Name}} value={{this._id}}>{{this.Name}}</option>
+                      {{/each}}
+
+                  </select>
+                </div> <br>
+                <div id="myselect" class="col-md-12">
+
+                </div>
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Product Name</label>
+                  <input type="text" name="ProductName" class="form-control" id="inputName5">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputProductIamge5" class="form-label">Product Iamge</label>
+                  <input type="file" name="file" multiple="multiple" class="form-control" id="inputProductIamge5">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPrice5" class="form-label">Product Price </label>
+                  <input type="number" name="ProductPrice" class="form-control" id="inputPrice5"
+                    placeholder="Enter Product Price">
+                </div>
+                <div class="col-12">
+                  <label for="inputdescription" class="form-label">description</label>
+                  <input type="text" name="description" class="form-control" id="inputdescription"
+                    placeholder="description">
+                </div>
+                {{!-- <div class="col-12">
+                  <label for="inputAddress2" class="form-label">Address 2</label>
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div> --}}
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                      Check me out
+                    </label>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" id="mySubmit">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form><!-- End Multi Columns Form -->
+              {{/if}}
+            </div>
           </div>
-        </div>
-
-
-      </div>
-
     </section>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
     <script>
-      function run() {
-        let data = { somekey: $('#subject').val() }
-        $("#topic option").each(function () {
-          $(this).remove();
-        });
-        $("#chapter option").each(function () {
-          $(this).remove();
-        });
-
+      document.getElementById("mySubmit").disabled = true;
+      function clickMe(select) {
+        console.log("se", select)
+        let num = Number(select.id)
+        let category = select.value
         $.ajax({
-          type: 'GET',
-          data: { "select": $('#subject').val() },
-          url: `http://localhost:5000/optiongeturl/${data}`,
-          success: (data) => {
-            //console.log(data);
-            $('#topic').append(`<option value="">Please select subject first</option>`)
-            data.forEach((index) => {
-              $('#topic').append(`<option value=${index._id}>${index.Name}</option>`);
-            });
+          type: 'get',
+          data: { "select": category },
+          url: '/optiongeturl',// nandlal
+          success: function (data) {
+            if (data.length > 0) {
+              console.log(data)
+              let abc = `<div id="subcategory-${num + 1}"><label for="inputAddress" class="form-label">Sub Category</label>`
+              abc += `<select style="width:50%;margin-bottom:20px"   class="form-select" onchange="clickMe(this )" name="category" id="${num + 1}">`
+              abc += `<option>select Sub Category</option>`
 
+              data.forEach((item) => {
+                abc += `<option value=${item._id}>${item.Name}</option>`
+              })
+
+              abc += `</select></div>`
+              let num2 = num + 1
+              while (true) {
+                let cat = $(`#subcategory-${num2}`)
+                if (cat.html()) {
+                  cat.remove();
+                }
+                else {
+                  break;
+                }
+                ++num2
+              }
+              $('#myselect').append(abc)
+            } else {
+              document.getElementById("mySubmit").disabled = false;
+            }
           }
         })
-        // run2();
       }
-      //run();
-
-
-      //sub
-      function run2() {
-        $("#chapter option").each(function () {
-          $(this).remove();
-        });
-        //console.log("run222222")
-        let data = { somekey: $('#topic').val() }
-        //console.log("dadddddd2", data)
-
-        $.ajax({
-          type: 'GET',
-          data: { "select": $('#topic').val() },
-          url: `http://localhost:5000/sub2_category/${data}`,
-          success: (data) => {
-            //console.log(data);
-            $('#chapter').append(`<option value="">Please select topic first</option>`);
-            data.forEach((index) => {
-              $('#chapter').append(`<option value=${index._id}>${index.Name}</option>`);
-            });
-
-          }
-        })
-
-      }
-     // run2();
     </script>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -391,17 +465,17 @@
       class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.min.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/chart.js/chart.min.js"></script>
+  <script src="/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/assets/vendor/quill/quill.min.js"></script>
+  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 
 </body>
 

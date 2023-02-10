@@ -279,7 +279,7 @@
 
   </header><!-- End Header -->
 
-{{> sidebar }}
+  {{> sidebar }}
 
   <main id="main" class="main">
 
@@ -287,7 +287,7 @@
       <h1>Alerts</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item">Components</li>
           <li class="breadcrumb-item active">Alerts</li>
         </ol>
@@ -298,10 +298,6 @@
       <div class="row">
         <div class="card-body">
           <h5 class="card-title">Vertical Form</h5>
-          <a href="category.html">
-            <h3> add category</h3>
-          </a>
-
           <!-- Vertical Form -->
 
 
@@ -309,11 +305,13 @@
             <thead>
               <tr>
                 <th>Sno</th>
-                <th>Name</th>
+                <th>category</th>
+                <th>ProductName</th>
                 <th>image</th>
-                <th>parent name</th>
-                <th>edit</th>
-                <th>delete</th>
+                <th>ProductPrice</th>
+                <th>description</th>
+                <th>Action</th>
+                {{!-- <th></th> --}}
 
 
               </tr>
@@ -321,7 +319,6 @@
             <tbody>
             </tbody>
           </table>
-
           <script type="text/javascript">
             $(document).ready(function () {
               $.fn.dataTable.ext.errMode = 'none';
@@ -331,17 +328,19 @@
                 serverSide: true,
                 "ajax": {
                   "type": 'GET',
-                  "url": '/viwes_sub2_category',
+                  "url": '/Views_Products_DataTable',
                   "dataSrc": 'data',
                   error: function () { console.log(error) }
                 },
                 "columns": [
                   { "data": "count" },
-                  { "data": "Name" },
+                  { "data": "category" },
+                  { "data": "ProductName" },
                   { "data": "image" },
-                   { "data": "parent_Name" },
-                  { "data": "edit" },
-                  { "data": "delete" },
+                  { "data": "ProductPrice" },
+                  { "data": "description" },
+                  { "data": "Action" },
+
 
 
                 ]

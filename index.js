@@ -21,5 +21,5 @@ hbs.registerPartials(partials_path);
 app.use(UserRouter);
 
 app.listen(PORT, () => {
-    console.log(`server runing at port number ${PORT}`);
+    console.log(`NewNice server runing at port number  ${PORT}`);
 })

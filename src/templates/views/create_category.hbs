@@ -65,23 +65,23 @@
 
           <!-- Vertical Form -->
           <form class="row g-3" action="add_category" method="post"  enctype="multipart/form-data">
-            <div class="col-12">
+            {{!-- <div class="col-12">
               <label for="inputNanme4" class="form-label">parent Name</label>
               <select name="parent_Name" id="">
                 <option value="">null</option>
               </select>
-            </div>
+            </div> --}}
             {{!-- <div class="col-12">
               <label for="inputNanme4" class="form-label">parent Name</label>
              <input type="hidden" value={{index._id}} name="id">
             </div> --}}
             <div class="col-12">
               <label for="" class="form-label">Name</label>
-              <input type="text" class="form-control" name="Name" id="">
+              <input type="text" class="form-control" name="Name" id="" required>
             </div>
             <div class="col-12">
               <label for="inputPassword4" class="form-label">Iamge</label>
-              <input type="file" name="file" class="form-control" id="inputPassword4">
+              <input type="file" name="file" class="form-control" id="inputPassword4" required>
             </div>
 
             <div class="text-center">
